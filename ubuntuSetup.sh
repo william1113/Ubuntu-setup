@@ -4,7 +4,6 @@
 # his experience anything else fuck off ;)
 # time taken to start doing this script 6 years of procrastination
 
-# install packages functions right now only made for snap and apt
 installPackages(){
 	installType="$1"
 	file="$2.txt"
@@ -22,14 +21,15 @@ installPackages(){
 sudo apt update && sudo apt upgrade -y
 
 
-# installs packages
+
 installPackages "apt" "aptPackages.txt"
 installPackages "snap" "snapPackages"
 
 # makes mysql more secure and checks to see if it works
-sudo mysql_secure_installation
 sudo systemctl start mysql
 sudo systemctl stop mysql
+
+mv unpack ~/usr/local/bin
 
 # Set environment variables and alias
 echo 'export PATH=$PATH:$HOME/go/bin' >> ~/.bashrc
