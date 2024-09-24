@@ -11,7 +11,7 @@ sudo apt update && sudo apt upgrade -y
 
 # install packages
 
-while IFS=read -r package; do
+while IFS= read -r package; do
 	sudo apt install -y "$package"
 done < "packages.txt"
 echo "all packages done installing"
