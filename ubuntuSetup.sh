@@ -10,17 +10,10 @@
 sudo apt update && sudo apt upgrade -y
 
 # install packages
-packages=()
 
-while IFS=read -r line; do
-	words+=("$line")
-done < "packages.txt"
-
-for package in "${packages[0]}"; do
-	echo "Installing package $package..."
+while IFS=read -r package; do
 	sudo apt install -y "$package"
-done
-
+done < "packages.txt"
 echo "all packages done installing"
 
 sudo snap install slack discord telegram-desktop
