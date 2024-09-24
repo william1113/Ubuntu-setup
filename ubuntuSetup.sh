@@ -4,19 +4,27 @@
 # his experience anything else fuck off ;)
 # time taken to start doing this script 6 years of procrastination
 
-
+# install packages functions right now only made for snap and apt
+installPackages(){
+	installType="$1"
+	file="$2.txt"
+	
+	while IFS= read -r package; do
+		if [[ installType == "snap" ]]; then
+			sudo snap install "$package"
+		elif [[ installType == "apt" ]]; then
+			sudo apt  install "$package"
+		fi
+	done
+}
 
 # Update and upgrade system
 sudo apt update && sudo apt upgrade -y
 
-# install packages
 
-while IFS= read -r package; do
-	sudo apt install -y "$package"
-done < "packages.txt"
-echo "all packages done installing"
-
-sudo snap install slack discord telegram-desktop
+# installs packages
+installPackages "apt" "aptPackages.txt"
+installPackages "snap" "snapPackages"
 
 # makes mysql more secure and checks to see if it works
 sudo mysql_secure_installation
@@ -37,8 +45,7 @@ echo ~/.ssh/id_ed25519.pub
 
 # vim install?
 read -p "Have you set your git key to github? " answer
-if [["${answer,,}" -eq "y"]]; then
-
+if [["${answer,,}" == "y"]]; then
 	# setup needed modules for vim config
 	sudo apt install -y ripgrep fd-find
 	sudo ln -s $(which fdfind) /usr/local/bin/fd
@@ -59,7 +66,7 @@ mkdir dev
 
 # reboot system to make it healthy
 read -p "Ready to reboot? " answer
-if [[ "${reboot,,}" -eq "y"]]; then
+if [[ "${reboot,,}" == "y"]]; then
 	sudo reboot
 else
 	echo "Okay do it yourself ass hole"
